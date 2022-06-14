@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+
+  accounts:
+    image: xiaohan/accounts:latest
+    mem_limit: 700m
+    ports:
+      - "8080:8080"
+    networks:
+      - xiaohan-network
+
+  loans:
+    image: xiaohan/loans:xiaohan-loans
+    mem_limit: 700m
+    ports:
+      - "8090:8090"
+    networks:
+      - xiaohan-network
+
+  cards:
+    image: xiaohan/cards:latest
+    mem_limit: 700m
+    ports:
+      - "9000:9000"
+    networks:
+      - xiaohan-network
+
+networks:
+  xiaohan-network:
