@@ -1,6 +1,12 @@
 package com.xiaohan.accounts.controller;
 
+import com.xiaohan.accounts.model.Cards;
+import com.xiaohan.accounts.model.CustomerDetails;
+import com.xiaohan.accounts.model.Loans;
 import com.xiaohan.accounts.repository.AccountsRepository;
+import com.xiaohan.accounts.service.client.CardsFeignClient;
+import com.xiaohan.accounts.service.client.LoansFeignClient;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +32,12 @@ public class AccountsController {
   @Autowired
   AccountsServiceConfig accountsConfig;
 
+  @Autowired
+  LoansFeignClient loansFeignClient;
+
+  @Autowired
+  CardsFeignClient cardsFeignClient;
+
   @PostMapping("/myAccount")
   public Accounts getAccountDetails(@RequestBody Customer customer) {
 
@@ -45,6 +57,22 @@ public class AccountsController {
         accountsConfig.getMailDetails(), accountsConfig.getActiveBranches());
     String jsonStr = ow.writeValueAsString(properties);
     return jsonStr;
+  }
+
+
+  @PostMapping("/myCustomerDetails")
+  public CustomerDetails myCustomerDetails(@RequestBody Customer customer) {
+    Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
+    List<Loans> loans = loansFeignClient.getLoansDetails(customer);
+    List<Cards> cards = cardsFeignClient.getCardDetails(customer);
+
+    CustomerDetails customerDetails = new CustomerDetails();
+    customerDetails.setAccounts(accounts);
+    customerDetails.setLoans(loans);
+    customerDetails.setCards(cards);
+
+    return customerDetails;
+
   }
 
 }
