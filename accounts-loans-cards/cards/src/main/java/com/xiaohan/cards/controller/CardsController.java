@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xiaohan.cards.config.CardsServiceConfig;
@@ -28,7 +29,7 @@ public class CardsController {
   CardsServiceConfig cardsConfig;
 
   @PostMapping("/myCards")
-  public List<Cards> getCardDetails(@RequestBody Customer customer) {
+  public List<Cards> getCardDetails(@RequestHeader("xiaohanbank-correlation-id") String correlationid,@RequestBody Customer customer) {
     List<Cards> cards = cardsRepository.findByCustomerId(customer.getCustomerId());
     if (cards != null) {
       return cards;
