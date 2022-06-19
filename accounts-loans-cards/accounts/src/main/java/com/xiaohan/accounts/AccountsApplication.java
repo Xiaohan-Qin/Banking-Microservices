@@ -18,7 +18,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 @RefreshScope
 @ComponentScans({ @ComponentScan("com.xiaohan.accounts.controller")})
 @EnableJpaRepositories("com.xiaohan.accounts.repository")
-@EntityScan("com.eazybytes.accounts.model")
+@EntityScan("com.xiaohan.accounts.model")
 public class AccountsApplication {
 
   public static void main(String[] args) {
