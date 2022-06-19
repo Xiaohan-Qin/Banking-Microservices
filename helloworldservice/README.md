@@ -1,4 +1,3 @@
-### Created Hello World Service using Spring Boot
+### Hello World Service
 
-Description:
-* This is a simple Greeting REST Service using Spring Boot.
+This is a test Greeting REST Service using Spring Boot.
